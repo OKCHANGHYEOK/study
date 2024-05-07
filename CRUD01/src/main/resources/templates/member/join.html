@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>CRUD01</title>
+    <style>
+        #join_form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        input[type="submit"] {
+            width: fit-content;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+<div th:include="header.html">
+
+</div>
+<h2 th:align="center">회원가입</h2>
+
+<form id="join_form" method="POST">
+    <label>
+        아이디
+        <input name="userid" placeholder="ID입력" type="text">
+    </label>
+    <label>
+        패스워드
+        <input name="userpw" placeholder="PW입력" type="password">
+    </label>
+    <label>
+        이름
+        <input name="username" placeholder="이름 입력" type="text">
+    </label>
+    <input type="submit" value="가입하기">
+</form>
+</body>
+</html>

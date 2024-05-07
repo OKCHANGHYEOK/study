@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>CRUD01</title>
+    <style>
+        header {
+            width: 100%;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            width: 70%;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>CRUD01 - 회원, 게시판</h1>
+        <hr>
+
+        <ul>
+            <li>
+                <a th:href="${login != null ? 'logout' : 'login'}" th:text="${login != null} ? '로그아웃' : '로그인'"></a>
+            </li>
+            <li>
+                <a href="/member/join">회원가입</a>
+            </li>
+            <li>게시판</li>
+        </ul>
+    </header>
+</body>
+</html>
