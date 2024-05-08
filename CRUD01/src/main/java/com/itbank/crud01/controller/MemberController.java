@@ -2,6 +2,7 @@ package com.itbank.crud01.controller;
 
 import com.itbank.crud01.model.Member;
 import com.itbank.crud01.service.MemberService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,5 +34,20 @@ public class MemberController {
             return mav;
         }
         return mav;
+    }
+
+    @GetMapping("/login")
+    public String login() {
+        return "member/login";
+    }
+
+    @PostMapping("/login")
+    public String login(Member member, HttpSession session) {
+        Member login = ms.login(member);
+        if(login != null) {
+            System.out.println(login.getUsername());
+            session.setAttribute("login", login);
+        }
+        return "home";
     }
 }

@@ -16,4 +16,8 @@ public class MemberService {
     public Member join(Member member) {
         return mp.save(member);
     }
+
+    public Member login(Member member) {
+        return mp.findByUseridAndUserpw(member.getUserid(), member.getUserpw());
+    }
 }
