@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>CRUD01</title>
+    <style>
+        #login_form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        input[type="submit"] {
+            width: fit-content;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+<div th:include="header.html">
+
+</div>
+<h2 th:align="center">로그인</h2>
+
+<form id="login_form" method="POST">
+    <label>
+        <input name="userid" placeholder="ID입력" type="text">
+    </label>
+    <label>
+        <input name="userpw" placeholder="PW입력" type="password">
+    </label>
+    <input type="submit" value="로그인">
+</form>
+</body>
+</html>

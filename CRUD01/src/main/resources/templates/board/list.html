@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>CRUD01</title>
+    <style>
+        table {
+            width: 700px;
+            margin: 10px auto;
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid black;
+        }
+
+        tr > th:nth-child(2) {
+            width: 40%;
+        }
+
+        tr > td:nth-child(2) {
+            width: 40%;
+        }
+    </style>
+</head>
+<body>
+<div th:include="header.html">
+
+</div>
+<h2 th:align="center">게시판</h2>
+<table>
+    <thead>
+        <tr>
+            <th>글번호</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>작성일</th>
+            <th>조회수</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
