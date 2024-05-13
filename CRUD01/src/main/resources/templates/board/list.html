@@ -4,6 +4,26 @@
     <meta charset="UTF-8">
     <title>CRUD01</title>
     <style>
+        #board {
+            width: 700px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        #write_btn {
+            all: unset;
+            width: 60px;
+            height: 25px;
+            border-radius: 8px;
+            background-color: lime;
+            color: white;
+            font-size: 15px;
+            position: absolute;
+            top: 5px;
+            right: 0px;
+            text-align: center;
+        }
+
         table {
             width: 700px;
             margin: 10px auto;
@@ -28,9 +48,14 @@
 <div th:include="header.html">
 
 </div>
-<h2 th:align="center">게시판</h2>
-<table>
-    <thead>
+
+<section id="board">
+    <a href="/board/write">
+        <button id="write_btn">글작성</button>
+    </a>
+    <h2 th:align="center">게시판</h2>
+    <table>
+        <thead>
         <tr>
             <th>글번호</th>
             <th>제목</th>
@@ -38,17 +63,19 @@
             <th>작성일</th>
             <th>조회수</th>
         </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+        </thead>
+        <tbody>
+        <tr th:each="board : ${list}">
+            <td th:text="${board.idx}"></td>
+            <td th:text="${board.title}"></td>
+            <td th:text="${board.writer}"></td>
+            <td th:text="${board.writedate}"></td>
+            <td th:text="${board.viewcount}"></td>
         </tr>
-    </tbody>
-</table>
+        </tbody>
+    </table>
+</section>
+
 
 </body>
 </html>
