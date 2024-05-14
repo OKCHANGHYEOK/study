@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <title>CRUD01</title>
     <style>
+        * {
+            user-select: none;
+        }
+
         header {
             width: 100%;
         }
@@ -21,7 +25,9 @@
 <body>
     <header>
         <h1>
-            <span>CRUD01 - 회원, 게시판</span>
+            <span>
+                <a href="/">CRUD01 - 회원, 게시판</a>
+            </span>
             <span th:text="${session.login != null ? session.login.username + '님 로그인 중'  : '' }"></span>
         </h1>
         <hr>

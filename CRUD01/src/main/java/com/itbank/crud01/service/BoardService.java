@@ -3,6 +3,7 @@ package com.itbank.crud01.service;
 import com.itbank.crud01.model.Board;
 import com.itbank.crud01.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,11 +14,15 @@ public class BoardService {
 
     private final BoardRepository boardRepository;
 
-    public void insert(Board board) {
-        boardRepository.insert(board);
+    public int insert(Board board) {
+        return boardRepository.insert(board);
     }
 
     public List<Board> selectAll() {
-       return boardRepository.findAll();
+        return boardRepository.findAll(Sort.by(Sort.Direction.DESC, "idx"));
+    }
+
+    public Board selectOne(int idx) {
+        return boardRepository.findByIdx(idx);
     }
 }

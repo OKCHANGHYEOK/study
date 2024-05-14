@@ -42,6 +42,11 @@
         tr > td:nth-child(2) {
             width: 40%;
         }
+
+        tr > td:nth-child(2):hover {
+            cursor: pointer;
+            background-color: skyblue;
+        }
     </style>
 </head>
 <body>
@@ -67,7 +72,7 @@
         <tbody>
         <tr th:each="board : ${list}">
             <td th:text="${board.idx}"></td>
-            <td th:text="${board.title}"></td>
+            <td th:idx="${board.idx}" th:text="${board.title}"></td>
             <td th:text="${board.writer}"></td>
             <td th:text="${board.writedate}"></td>
             <td th:text="${board.viewcount}"></td>
@@ -76,6 +81,15 @@
     </table>
 </section>
 
+<script>
+    const boards = document.querySelectorAll('tr > td:nth-child(2)')
 
+    function viewHandler(event) {
+        let idx = event.target.getAttribute('idx')
+        location.href = "/board/view/" + idx
+    }
+
+    boards.forEach(e => e.addEventListener('click', viewHandler))
+</script>
 </body>
 </html>

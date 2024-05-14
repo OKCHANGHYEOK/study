@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>CRUD01</title>
+    <style>
+        #board {
+            width: 400px;
+            border: 1px solid black;
+            margin: 20px auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        #board > div {
+            width: 350px;
+            display: flex;
+        }
+
+        #board > div > div:nth-child(1) {
+            width: 50px;
+        }
+
+        #board > div > div:nth-child(2) {
+            width: 300px;
+            margin-left: 5px;
+            border: 1px solid black;
+            border-radius: 10px;
+            box-sizing: border-box;
+            padding-left: 10px;
+        }
+
+        pre {
+            width: 350px;
+            height: 200px;
+            border: 1px solid black;
+            border-radius: 10px;
+            white-space: pre-wrap;
+            box-sizing: border-box;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+<div th:include="header.html">
+
+</div>
+<h2 th:align="center" th:text="${board.title}"></h2>
+
+<div id="board">
+    <div style="margin-top: 10px;">
+        <div>
+            제목
+        </div>
+        <div th:text="${board.title}">
+
+        </div>
+    </div>
+    <div style="margin-top: 10px;">
+        <div>
+            작성자
+        </div>
+        <div th:text="${board.writer}">
+
+        </div>
+    </div>
+    <div style="margin-top: 10px;">
+        <div>
+            작성일
+        </div>
+        <div th:text="${board.writedate}">
+
+        </div>
+    </div>
+    <div style="margin-top: 10px;">
+        <div>
+            조회수
+        </div>
+        <div th:text="${board.viewcount}">
+
+        </div>
+    </div>
+    <nav style="margin-top: 10px;">
+        <pre th:text="${board.content}">
+
+        </pre>
+    </nav>
+</div>
+</body>
+</html>
