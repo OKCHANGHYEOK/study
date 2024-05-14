@@ -6,6 +6,7 @@ import com.itbank.crud01.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -35,10 +36,18 @@ public class BoardController {
     @PostMapping("/write")
     public String write(Board board) {
         try {
-            bs.insert(board);
+            int row = bs.insert(board);
         } catch(Exception e) {
-            return "/home";
+            return "redirect:/";
         }
-        return "/board/list";
+        return "redirect:/board/list";
+    }
+
+    @GetMapping("/view/{idx}")
+    public ModelAndView view(@PathVariable("idx") int idx) {
+        ModelAndView mav = new ModelAndView("/board/view");
+        Board board = bs.selectOne(idx);
+        mav.addObject("board", board);
+        return mav;
     }
 }
