@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div id="msg" th:text="${msg}">
+
+    </div>
+    <script>
+        const msg = document.getElementById("msg").innerText
+        if(msg.includes("로그인")) {
+            const flag = confirm(msg)
+            if(flag) {
+                location.href = 'member/login'
+            }
+            else {
+                history.back()
+            }
+        }
+        else {
+            alert(msg)
+            location.href = 'member/join'
+        }
+
+    </script>
+</body>
+</html>

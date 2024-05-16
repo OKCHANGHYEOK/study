@@ -6,20 +6,18 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Component
 public class LoginInterceptor implements HandlerInterceptor {
 
-    @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         HttpSession session = request.getSession();
         Member login = (Member) session.getAttribute("login");
         if(login == null) {
-            System.out.println("preHandle 동작 테스트");
-            response.sendRedirect("/");
+            response.sendRedirect("/alert");
             return false;
         }
-        System.out.println("preHandle 동작 테스트");
         return HandlerInterceptor.super.preHandle(request, response, handler);
     }
 }

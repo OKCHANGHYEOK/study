@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/member")
@@ -42,11 +43,15 @@ public class MemberController {
     }
 
     @PostMapping("/login")
-    public String login(Member member, HttpSession session) {
+    public String login(Member member, HttpSession session, RedirectAttributes rttr) {
         Member login = ms.login(member);
         if(login != null) {
             System.out.println(login.getUsername());
             session.setAttribute("login", login);
+        }
+        else {
+            rttr.addFlashAttribute("msg", "일치하는 회원 정보가 없습니다.");
+            return "redirect:/alert";
         }
         return "home";
     }
