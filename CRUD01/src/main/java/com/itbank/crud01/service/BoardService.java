@@ -25,4 +25,8 @@ public class BoardService {
     public Board selectOne(int idx) {
         return boardRepository.findByIdx(idx);
     }
+
+    public int increaseViewCount(int idx) {
+        return boardRepository.increaseViewCount(idx);
+    }
 }

@@ -10,8 +10,8 @@
     </div>
     <script>
         const msg = document.getElementById("msg").innerText
-        if(msg.includes("로그인")) {
-            const flag = confirm(msg)
+        if(msg === '') {
+            const flag = confirm("로그인이 필요한 기능입니다. 로그인 페이지로 이동하시겠습니까?")
             if(flag) {
                 location.href = 'member/login'
             }
@@ -21,7 +21,7 @@
         }
         else {
             alert(msg)
-            location.href = 'member/join'
+            history.back()
         }
 
     </script>

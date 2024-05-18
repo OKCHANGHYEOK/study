@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>CRUD01</title>
+    <style>
+        #modify_form {
+            width: 600px;
+            margin: 20px auto;
+            border: 1px solid black;
+        }
+
+        textarea {
+            width: 300px;
+            height: 200px;
+            resize: none;
+            box-sizing: border-box;
+            border: 1px solid black;
+            border-radius: 10px;
+            padding: 0 5px;
+        }
+
+        #write_form > div {
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+<div th:include="header.html">
+
+</div>
+<h2 th:align="center">글수정</h2>
+
+<form id="modify_form" method="POST">
+    <div>
+        <label>
+            제목
+            <input type="text" name="title" placeholder="제목을 입력하세요" autofocus>
+        </label>
+    </div>
+    <div>
+        <label>
+            작성자
+            <input type="text" name="writer" th:value="${session.login.userid}" readonly>
+        </label>
+    </div>
+    <div>
+        <label>
+            내용
+            <textarea name="content">
+
+            </textarea>
+        </label>
+    </div>
+    <button>작성완료</button>
+</form>
+</body>
+</html>

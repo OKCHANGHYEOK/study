@@ -16,4 +16,9 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     int insert(Board board);
 
     Board findByIdx(int idx);
+
+    @Modifying
+    @Transactional
+    @Query("update Board set viewcount = viewcount + 1 where idx = :idx")
+    int increaseViewCount(int idx);
 }

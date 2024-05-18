@@ -2,9 +2,11 @@ package com.itbank.crud01.controller;
 
 import com.itbank.crud01.model.Member;
 import com.itbank.crud01.service.MemberService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,17 +45,18 @@ public class MemberController {
     }
 
     @PostMapping("/login")
-    public String login(Member member, HttpSession session, RedirectAttributes rttr) {
+    public ModelAndView login(Member member, HttpSession session) {
+        ModelAndView mav = new ModelAndView("home");
         Member login = ms.login(member);
         if(login != null) {
             System.out.println(login.getUsername());
             session.setAttribute("login", login);
         }
         else {
-            rttr.addFlashAttribute("msg", "일치하는 회원 정보가 없습니다.");
-            return "redirect:/alert";
+            mav.addObject("msg", "일치하는 회원 정보가 없습니다");
+            mav.setViewName("alert");
         }
-        return "home";
+        return mav;
     }
 
     @GetMapping("/logout")

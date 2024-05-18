@@ -12,6 +12,7 @@
             justify-content: center;
             align-items: center;
             flex-direction: column;
+            padding: 10px;
         }
 
         #board > div {
@@ -40,6 +41,11 @@
             white-space: pre-wrap;
             box-sizing: border-box;
             padding: 5px;
+        }
+
+        #btns {
+            display: flex;
+            justify-content: flex-end;
         }
     </style>
 </head>
@@ -87,6 +93,10 @@
 
         </pre>
     </nav>
+    <div th:class="${(session.login != null && session.login.userid == board.writer) ? '' : 'hidden' }" id="btns">
+        <a href="/board/modify"><button>수정</button></a>
+        <a><button style="margin-left: 5px;">삭제</button></a>
+    </div>
 </div>
 </body>
 </html>
