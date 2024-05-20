@@ -5,23 +5,41 @@
     <title>CRUD01</title>
     <style>
         #modify_form {
-            width: 600px;
-            margin: 20px auto;
+            width: 400px;
             border: 1px solid black;
+            margin: 20px auto;
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
         }
 
         textarea {
-            width: 300px;
+            width: 350px;
             height: 200px;
-            resize: none;
-            box-sizing: border-box;
             border: 1px solid black;
             border-radius: 10px;
-            padding: 0 5px;
+            white-space: pre-wrap;
+            box-sizing: border-box;
+            padding: 5px;
         }
 
-        #write_form > div {
+        #modify_form > div {
+            width: 100%;
             display: flex;
+            justify-content: center;
+            margin-top: 5px;
+        }
+
+        .column {
+            flex: 1;
+        }
+
+        .input {
+            flex: 7;
+        }
+
+        input[type="text"] {
+            width: 200px;
         }
     </style>
 </head>
@@ -33,26 +51,40 @@
 
 <form id="modify_form" method="POST">
     <div>
-        <label>
+        <div class="column">
             제목
-            <input type="text" name="title" placeholder="제목을 입력하세요" autofocus>
-        </label>
+        </div>
+        <div class="input">
+            <label>
+                <input type="text" name="title" th:value="${board.title}" autofocus>
+            </label>
+        </div>
     </div>
     <div>
-        <label>
+        <div class="column">
             작성자
-            <input type="text" name="writer" th:value="${session.login.userid}" readonly>
-        </label>
+        </div>
+        <div class="input">
+            <label>
+                <input type="text" name="writer" th:value="${session.login.userid}" readonly>
+            </label>
+        </div>
+
     </div>
     <div>
-        <label>
+        <div class="column">
             내용
-            <textarea name="content">
-
+        </div>
+        <div class="input">
+            <label>
+            <textarea name="content" th:text="${board.content}">
             </textarea>
-        </label>
+            </label>
+        </div>
     </div>
-    <button>작성완료</button>
+    <div>
+        <button style="width: fit-content; padding: 5px;">작성완료</button>
+    </div>
 </form>
 </body>
 </html>

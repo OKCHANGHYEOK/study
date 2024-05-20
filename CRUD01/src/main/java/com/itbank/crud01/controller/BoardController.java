@@ -1,7 +1,9 @@
 package com.itbank.crud01.controller;
 
 
+import com.itbank.crud01.exception.BadAccessException;
 import com.itbank.crud01.exception.BadWritingTryException;
+import com.itbank.crud01.exception.NoSuchBoardException;
 import com.itbank.crud01.model.Board;
 import com.itbank.crud01.model.Member;
 import com.itbank.crud01.service.BoardService;
@@ -24,9 +26,12 @@ public class BoardController {
     private final BoardService bs;
 
     @GetMapping("/list")
-    public ModelAndView list() {
+    public ModelAndView list(String search) {
         ModelAndView mav = new ModelAndView("/board/list");
-        List<Board> list = bs.selectAll();
+        if (search == null) {
+            search = "";
+        }
+        List<Board> list = bs.selectAll(search);
         mav.addObject("list", list);
         return mav;
     }
@@ -47,16 +52,45 @@ public class BoardController {
     }
 
     @GetMapping("/view/{idx}")
-    public ModelAndView view(@PathVariable("idx") int idx) {
+    public ModelAndView view(@PathVariable("idx") int idx) throws NoSuchBoardException {
         ModelAndView mav = new ModelAndView("/board/view");
+        if(bs.selectOne(idx) == null) {
+            throw new NoSuchBoardException();
+        }
         bs.increaseViewCount(idx);
         Board board = bs.selectOne(idx);
         mav.addObject("board", board);
         return mav;
     }
 
-    @GetMapping("/modify")
-    public String modify() {
-        return "board/modify";
+    @GetMapping("/modify/{idx}")
+    public ModelAndView modify(@PathVariable("idx") int idx, HttpSession session) throws BadAccessException, NoSuchBoardException {
+        ModelAndView mav = new ModelAndView("/board/modify");
+        Board board = bs.selectOne(idx);
+        Member login = (Member) session.getAttribute("login");
+        if(board == null) {
+            throw new NoSuchBoardException();
+        }
+        if(login == null || !login.getUserid().equals(board.getWriter())) {
+            throw new BadAccessException();
+        }
+        mav.addObject("board", board);
+        return mav;
+    }
+
+    @PostMapping("/modify/{idx}")
+    public String modify(Board board) {
+        bs.modify(board);
+        return "redirect:/board/view/" + board.getIdx();
+    }
+
+    @GetMapping("/delete/{idx}")
+    public String delete(@PathVariable("idx") int idx, HttpSession session) throws BadAccessException {
+        Member login = (Member) session.getAttribute("login");
+        if(login == null || !bs.selectOne(idx).getWriter().equals(login.getUserid())) {
+            throw new BadAccessException();
+        }
+        bs.delete(idx);
+        return "redirect:/board/list";
     }
 }

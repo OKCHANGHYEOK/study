@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface BoardRepository extends JpaRepository<Board, Long> {
 
@@ -21,4 +23,17 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     @Transactional
     @Query("update Board set viewcount = viewcount + 1 where idx = :idx")
     int increaseViewCount(int idx);
+
+    @Modifying
+    @Transactional
+    @Query("update Board set title = :#{#board.title}, content = :#{#board.content} where idx = :#{#board.idx}")
+    void modify(Board board);
+
+    @Modifying
+    @Transactional
+    @Query("delete from Board b where b.idx = :idx")
+    void deleteByIdx(int idx);
+
+    @Query("select b from Board b where b.title like %:search% or b.writer like %:search% or b.content like %:search% order by b.idx desc")
+    List<Board> selectList(String search);
 }

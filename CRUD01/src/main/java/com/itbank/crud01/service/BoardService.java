@@ -18,8 +18,8 @@ public class BoardService {
         return boardRepository.insert(board);
     }
 
-    public List<Board> selectAll() {
-        return boardRepository.findAll(Sort.by(Sort.Direction.DESC, "idx"));
+    public List<Board> selectAll(String search) {
+        return boardRepository.selectList(search);
     }
 
     public Board selectOne(int idx) {
@@ -28,5 +28,13 @@ public class BoardService {
 
     public int increaseViewCount(int idx) {
         return boardRepository.increaseViewCount(idx);
+    }
+
+    public void modify(Board board) {
+        boardRepository.modify(board);
+    }
+
+    public void delete(int idx) {
+        boardRepository.deleteByIdx(idx);
     }
 }
