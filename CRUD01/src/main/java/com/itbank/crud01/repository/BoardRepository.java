@@ -2,6 +2,8 @@ package com.itbank.crud01.repository;
 
 import com.itbank.crud01.model.Board;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -35,5 +37,5 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     void deleteByIdx(int idx);
 
     @Query("select b from Board b where b.title like %:search% or b.writer like %:search% or b.content like %:search% order by b.idx desc")
-    List<Board> selectList(String search);
+    Page<Board> findBySearch(String search, Pageable pageable);
 }

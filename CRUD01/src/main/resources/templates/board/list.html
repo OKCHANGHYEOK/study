@@ -51,22 +51,24 @@
 
         #search_bar {
             position: absolute;
-            top: 80%;
+            top: 82%;
             left: 58%;
+        }
+
+        #paging_bar {
+            position: absolute;
+            top: 79%;
+            left: 50%;
+            transform: translate(-50%);
+            width: 500px;
+            height: 25px;
+            border: 1px solid black;
         }
     </style>
 </head>
 <body>
 <div th:include="header.html">
 
-</div>
-<div id="search_bar">
-    <form>
-        <label>
-            <input type="search" name="search" placeholder="검색어를 입력하세요">
-        </label>
-        <button>검색</button>
-    </form>
 </div>
 <section id="board">
     <a href="/board/write">
@@ -84,7 +86,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="board : ${list}">
+        <tr th:each="board : ${list.content}">
             <td th:text="${board.idx}"></td>
             <td th:idx="${board.idx}" th:text="${board.title}"></td>
             <td th:text="${board.writer}"></td>
@@ -94,6 +96,20 @@
         </tbody>
     </table>
 </section>
+<div id="paging_bar">
+    <ul>
+        <li th:each="i : ${#numbers.sequence(1, list.totalPages)}" th:text="'[' + ${i} + ']'"></li>
+    </ul>
+</div>
+<div id="search_bar">
+    <form>
+        <label>
+            <input type="search" name="search" placeholder="검색어를 입력하세요">
+        </label>
+        <button>검색</button>
+    </form>
+</div>
+
 
 <script>
     const boards = document.querySelectorAll('tr > td:nth-child(2)')
@@ -102,7 +118,6 @@
         let idx = event.target.getAttribute('idx')
         location.href = "/board/view/" + idx
     }
-
     boards.forEach(e => e.addEventListener('click', viewHandler))
 </script>
 </body>

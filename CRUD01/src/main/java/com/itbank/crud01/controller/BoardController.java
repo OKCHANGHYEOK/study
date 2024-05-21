@@ -9,6 +9,8 @@ import com.itbank.crud01.model.Member;
 import com.itbank.crud01.service.BoardService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,12 +28,12 @@ public class BoardController {
     private final BoardService bs;
 
     @GetMapping("/list")
-    public ModelAndView list(String search) {
+    public ModelAndView list(String search, Pageable pageable) {
         ModelAndView mav = new ModelAndView("/board/list");
         if (search == null) {
             search = "";
         }
-        List<Board> list = bs.selectAll(search);
+        Page<Board> list = bs.findBySearch(search, pageable);
         mav.addObject("list", list);
         return mav;
     }
