@@ -27,6 +27,8 @@
     </style>
 </head>
 <body>
+    <div id="userid" class="hidden" th:text="${session.login != null ? session.login.userid : ''}"></div>
+
     <header>
         <h1>
             <span>
@@ -44,9 +46,11 @@
                 <a href="/member/join">회원가입</a>
             </li>
             <li>
-                <a href="/board/list">게시판</a>
+                <a href="/board/list/1">게시판</a>
             </li>
         </ul>
     </header>
+
 </body>
 </html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

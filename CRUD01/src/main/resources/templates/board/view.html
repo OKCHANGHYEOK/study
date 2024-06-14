@@ -47,6 +47,36 @@
             display: flex;
             justify-content: flex-end;
         }
+
+        #reply_container {
+            margin: 20px auto;
+            width: 425px;
+            height: 80px;
+        }
+
+        #reply_form {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            box-sizing: border-box;
+        }
+
+        #reply_form > label {
+            width: 100%;
+            height: 100%;
+        }
+
+        #reply_form_text {
+            width: 90%;
+            height: 100%;
+            resize: none;
+            box-sizing: border-box;
+            padding: 5px;
+        }
+
+        #reply_submit_btn {
+            width: 30%;
+        }
     </style>
 </head>
 <body>
@@ -97,20 +127,55 @@
         <a th:href="@{/board/modify/{id}(id=${board.idx})}"><button>수정</button></a>
         <button id="deleteBtn" style="margin-left: 5px;" th:idx="${board.idx}">삭제</button>
     </div>
-
-    <script>
-        const deleteBtn = document.getElementById('deleteBtn')
-        deleteBtn.onclick = function (event) {
-            const flag = confirm("정말로 삭제하시겠습니까?")
-            if(flag) {
-                const idx = event.target.getAttribute("idx")
-                location.href = '/board/delete/' + idx
-            }
-            else {
-                return false
-            }
-        }
-    </script>
 </div>
+
+<section id="reply_container">
+    <form id="reply_form">
+        <input type="hidden" name="boardIdx" th:value="${board.idx}">
+        <label>
+            <textarea id="reply_form_text" th:placeholder="${session.login != null ? '댓글을 작성하세요' : '로그인 후 댓글을 작성할 수 있습니다'}"></textarea>
+        </label>
+        <button id="reply_submit_btn" th:disabled="${session.login != null ? 'false' : 'true'}">댓글작성</button>
+    </form>
+</section>
+
+<script>
+    const deleteBtn = document.getElementById('deleteBtn')
+    deleteBtn.onclick = function (event) {
+        const flag = confirm("정말로 삭제하시겠습니까?")
+        if(flag) {
+            const idx = event.target.getAttribute("idx")
+            location.href = '/board/delete/' + idx
+        }
+        else {
+            return false
+        }
+    }
+
+    const replyForm = document.forms[0]
+    function replySubmitHandler(event) {
+        event.preventDefault()
+        const boardIdx = replyForm.querySelector('input[type="hidden"]').value
+        const replyBtn = replyForm.querySelector('button')
+        const replyContent = replyForm.querySelector('textarea').value
+        const userid = document.getElementById('userid').innerText
+        $.ajax({
+            type: 'post',
+            url : '/board/reply/write/' + boardIdx,
+            headers : {
+                "Content-Type" : "application/json",
+            },
+            dataType : "json",
+            data: JSON.stringify({
+                "userid" : userid,
+                "content" : replyContent
+            }),
+            success : function (result) {
+                console.log(result)
+            }
+        })
+    }
+    replyForm.onsubmit = replySubmitHandler
+</script>
 </body>
 </html>

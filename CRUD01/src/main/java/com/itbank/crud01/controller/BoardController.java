@@ -10,6 +10,7 @@ import com.itbank.crud01.service.BoardService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,12 +28,13 @@ public class BoardController {
 
     private final BoardService bs;
 
-    @GetMapping("/list")
-    public ModelAndView list(String search, Pageable pageable) {
+    @GetMapping("/list/{pageNum}")
+    public ModelAndView list(String search, @PathVariable int pageNum) {
         ModelAndView mav = new ModelAndView("/board/list");
         if (search == null) {
             search = "";
         }
+        Pageable pageable = PageRequest.of(pageNum - 1, 20);
         Page<Board> list = bs.findBySearch(search, pageable);
         mav.addObject("list", list);
         return mav;
@@ -50,7 +52,7 @@ public class BoardController {
             throw new BadWritingTryException("잘못된 작성 요청입니다");
         }
         int row = bs.insert(board);
-        return "redirect:/board/list";
+        return "redirect:/board/list/1";
     }
 
     @GetMapping("/view/{idx}")
